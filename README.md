@@ -2,19 +2,21 @@
 
 ## Install and Setup
 
-Для запуска системы необходим кластер `kubernetes`. Как развернуть кластер локально, можно прочитать на [официальном сайте](https://kubernetes.io/docs/tasks/tools/install-minikube/).
-
-После того, как вы развернули кластер и подключились к нему (для доступа через `kubectl`), вам нужно выполнить 3 команды:
+Creation of the nodes
 
 ```
-kubectl create -f mapreduce-reduce.yaml
-kubectl create -f mapreduce-map.yaml
-kubectl create -f mapreduce-master.yaml
+kubectl create -f reducer.yaml
+kubectl create -f mapper.yaml
+kubectl create -f master.yaml
 ```
 
-Подождав немного времени, пока система развернется, можно начать эксперементировать:
 
+Create Proxy
 ```
-kubectl proxy --port=8080 &
-curl http://127.0.0.1:8080/api/v1/namespaces/default/pods/mapreduce-master/proxy/compute\?text\=Hello+world+test+test+test+test+test+test+helo+araara+tttt+dddd+araara+test+hello+hi+ih+ih+ih+hi
+kubectl proxy --port=8080
+```
+
+Send Get Request
+```
+http://127.0.0.1:8080/api/v1/namespaces/default/pods/mapreduce-master/proxy/compute?text=Hello%20This%20is%20a%20Kubernetes%20Hello%20from%20a%20Go%20Map%20Kubernetes%20cluster
 ```
